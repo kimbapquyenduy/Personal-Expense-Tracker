@@ -1,19 +1,33 @@
+import {
+  BarChart4,
+  CalendarDays,
+  ChevronLeft,
+  ChevronRight,
+  Folder,
+  LayoutDashboard,
+  MessageSquare,
+  MoveLeft,
+  Search,
+  Settings,
+  User,
+} from "lucide-react";
 import React, { useState } from "react";
 import { Link, Route, Routes } from "react-router-dom";
-import { Dashboard } from "./Dashboard";
+import { Dashboard } from "./sidebarChild/Dashboard";
 
 export const SidebarHome = () => {
   const [open, setOpen] = useState(true);
   const Menus = [
-    { title: "Dashboard", src: "Chart_fill" },
-    { title: "Inbox", src: "Chat" },
-    { title: "Accounts", src: "User", gap: true },
-    { title: "Schedule ", src: "Calendar" },
-    { title: "Search", src: "Search" },
-    { title: "Analytics", src: "Chart" },
-    { title: "Files ", src: "Folder", gap: true },
-    { title: "Setting", src: "Setting" },
+    { title: "Dashboard", src: <LayoutDashboard /> },
+    { title: "Inbox", src: <MessageSquare /> },
+    { title: "Accounts", src: <User />, gap: true },
+    { title: "Schedule ", src: <CalendarDays /> },
+    { title: "Search", src: <Search /> },
+    { title: "Analytics", src: <BarChart4 /> },
+    { title: "Files ", src: <Folder />, gap: true },
+    { title: "Setting", src: <Settings /> },
   ];
+
   return (
     <>
       <div
@@ -21,10 +35,16 @@ export const SidebarHome = () => {
           open ? "w-72" : "w-20 "
         } bg-dark-purple h-screen p-5  pt-8 relative duration-300`}
       >
-        <img
+        {/* <img
           src="./src/assets/control.png"
           className={`absolute cursor-pointer -right-3 top-9 w-7 border-dark-purple
            border-2 rounded-full  ${!open && "rotate-180"}`}
+          onClick={() => setOpen(!open)}
+        /> */}
+
+        <ChevronLeft
+          className={` text-dark-purple bg-white absolute cursor-pointer -right-3 top-9 w-6 border-dark-purple
+        border-2 rounded-full  ${!open && "rotate-180"}`}
           onClick={() => setOpen(!open)}
         />
         <div className="flex gap-x-4 items-center">
@@ -52,7 +72,8 @@ export const SidebarHome = () => {
                   index === 0 && "bg-light-white"
                 } `}
               >
-                <img src={`./src/assets/${Menu.src}.png`} />
+                {Menu.src}
+
                 <span
                   className={`${!open && "hidden"} origin-left duration-200`}
                 >

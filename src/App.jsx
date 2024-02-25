@@ -13,8 +13,9 @@ import {
 } from "react-router-dom";
 import { Login } from "./pages/Login";
 import { Navbar } from "./components/Navbar";
-import Schedule from "./components/Schedule";
-import Analytics from "./components/Analytics";
+import Schedule from "./components/sidebarChild/Schedule";
+import Analytics from "./components/sidebarChild/Analytics";
+import { Dashboard } from "./components/sidebarChild/Dashboard";
 
 function App() {
   const [count, setCount] = useState(0);
@@ -30,6 +31,10 @@ function App() {
         {
           path: "/Analytics",
           element: <Analytics />,
+        },
+        {
+          index: true,
+          element: <Dashboard />,
         },
       ],
     },
