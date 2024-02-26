@@ -19,7 +19,7 @@ export const SidebarHome = () => {
   const [open, setOpen] = useState(true);
   const Menus = [
     { title: "Dashboard", src: <LayoutDashboard /> },
-    { title: "Inbox", src: <MessageSquare /> },
+    { title: "Expense", src: <MessageSquare /> },
     { title: "Accounts", src: <User />, gap: true },
     { title: "Schedule ", src: <CalendarDays /> },
     { title: "Search", src: <Search /> },
@@ -64,7 +64,7 @@ export const SidebarHome = () => {
         </div>
         <ul className="pt-6">
           {Menus.map((Menu, index) => (
-            <Link to={`/${Menu.title}`}>
+            <Link to={`/${index != 0 ? Menu.title : ""}`}>
               <li
                 key={index}
                 className={`flex  rounded-md p-2 cursor-pointer hover:bg-light-white text-gray-300 text-sm items-center gap-x-4 

@@ -16,6 +16,7 @@ import { Navbar } from "./components/Navbar";
 import Schedule from "./components/sidebarChild/Schedule";
 import Analytics from "./components/sidebarChild/Analytics";
 import { Dashboard } from "./components/sidebarChild/Dashboard";
+import Expense from "./components/sidebarChild/Expense";
 
 function App() {
   const [count, setCount] = useState(0);
@@ -31,6 +32,10 @@ function App() {
         {
           path: "/Analytics",
           element: <Analytics />,
+        },
+        {
+          path: "/Expense",
+          element: <Expense />,
         },
         {
           index: true,
