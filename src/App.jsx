@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useContext, useState } from "react";
 import reactLogo from "./assets/react.svg";
 import viteLogo from "/vite.svg";
 import "./App.css";
@@ -7,6 +7,7 @@ import Home from "./pages/Home";
 import { Register } from "./pages/Register";
 import {
   createBrowserRouter,
+  Navigate,
   Route,
   RouterProvider,
   Routes,
@@ -17,13 +18,20 @@ import Schedule from "./components/sidebarChild/Schedule";
 import Analytics from "./components/sidebarChild/Analytics";
 import { Dashboard } from "./components/sidebarChild/Dashboard";
 import Expense from "./components/sidebarChild/Expense";
+import { AuthContextProvider } from "./context/AuthConext";
+import { ProtectRoute } from "./components/ProtectedRoute";
 
 function App() {
   const [count, setCount] = useState(0);
+
   const router = createBrowserRouter([
     {
       path: "/",
-      element: <Home />,
+      element: (
+        <ProtectRoute>
+          <Home />
+        </ProtectRoute>
+      ),
       children: [
         {
           path: "/Schedule",
@@ -55,8 +63,10 @@ function App() {
   ]);
   return (
     <>
-      <Navbar />
-      <RouterProvider router={router} />
+      <AuthContextProvider>
+        <Navbar />
+        <RouterProvider router={router} />
+      </AuthContextProvider>
     </>
   );
 }

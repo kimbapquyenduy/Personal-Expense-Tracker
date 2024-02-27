@@ -1,7 +1,13 @@
 import { useState } from "react";
-import { Outlet } from "react-router-dom";
+import { Navigate, Outlet } from "react-router-dom";
 import { SidebarHome } from "../components/sidebar";
+import React from "react";
+import { UserAuth } from "../context/AuthConext";
+import { Navbar } from "../components/Navbar";
+
 const App = () => {
+  const { user } = UserAuth();
+
   return (
     <div className="flex">
       <SidebarHome />

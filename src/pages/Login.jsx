@@ -1,33 +1,30 @@
-import React from "react";
+import React, { useContext } from "react";
 import { useState } from "react";
 import { getAuth, signInWithEmailAndPassword } from "firebase/auth";
 import { auth } from "../firebase";
 import { useNavigate } from "react-router-dom";
-
+import { UserAuth } from "../context/AuthConext";
 export const Login = () => {
-  const [error, setError] = useState(false);
+  const { user, logIn } = UserAuth();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const Navigate = useNavigate();
-  const handleLogin = (e) => {
-    e.preventDefault();
-    signInWithEmailAndPassword(auth, email, password)
-      .then((userCredential) => {
-        // Signed up
-        const user = userCredential.user;
-
-        Navigate("/");
-        // ...
-      })
-      .catch((error) => {
-        setError(true);
-      });
+  const [error, setError] = useState("");
+  const nagivate = useNavigate();
+  const OnSubmit = async (e) => {
+    try {
+      e.preventDefault();
+      await logIn(email, password);
+      setError("");
+      nagivate("/");
+    } catch (error) {
+      setError(error.message);
+      console.log(error);
+    }
   };
-  console.log(email);
-  console.log(password);
+
   return (
     <div className=" flex ">
-      <form onSubmit={handleLogin} className=" flex flex-col ">
+      <form onSubmit={OnSubmit} className=" flex flex-col ">
         <input
           type="email"
           placeholder="Email"
