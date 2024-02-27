@@ -11,8 +11,8 @@ const App = () => {
   return (
     <div className="flex">
       <SidebarHome />
-      <div className="h-screen flex-1 p-7">
-        <h1 className="text-2xl font-semibold ">Home Page</h1>
+      <div className="h-screen flex-1 p-7 bg-[#f1f1f1] ">
+        {/* <h1 className="text-2xl font-semibold ">Home Page</h1> */}
         <Outlet />
       </div>
     </div>
