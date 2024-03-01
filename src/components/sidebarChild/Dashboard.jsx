@@ -3,6 +3,7 @@ import React from "react";
 import BarChartBox from "../chart/BarChartBox";
 import ChartBox from "../chart/ChartBox";
 import PieChartBox from "../chart/PieChartBox";
+import DashList from "../DashList";
 
 export const Dashboard = () => {
   return (
@@ -14,10 +15,8 @@ export const Dashboard = () => {
           <PieChartBox />
         </div>
       </div>
-      <div className="bg-white w-[25%]">
-        <Empty>
-          <Button>Create</Button>
-        </Empty>
+      <div className=" w-[25%]">
+        <DashList />
       </div>
     </div>
   );
