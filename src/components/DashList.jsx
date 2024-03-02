@@ -1,7 +1,10 @@
 import { Card, List } from "antd";
+import { doc, onSnapshot } from "firebase/firestore";
 import { Badge, Rows3 } from "lucide-react";
-import React from "react";
+import React, { useEffect } from "react";
 import { useState } from "react";
+import { UserAuth } from "../context/AuthConext";
+import { db } from "../firebase";
 import DashListSkeleton from "./Skeleton/DashListSkeleton";
 
 const DashList = () => {
@@ -50,6 +53,16 @@ const DashList = () => {
       amt: 2100,
     },
   ];
+
+  const [history, setHistory] = useState([]);
+  const { user } = UserAuth();
+  useEffect(() => {
+    onSnapshot(doc(db, "users", `${user?.email}`), (doc) => {
+      setHistory(doc.data()?.Expense);
+      setIsLoading(false);
+    });
+  }, [user?.email]);
+  console.log(history);
   return (
     <Card
       style={{ height: "100%" }}
@@ -79,13 +92,13 @@ const DashList = () => {
       ) : (
         <List
           itemLayout="horizontal"
-          dataSource={[]}
-          renderItem={(data) => {
+          dataSource={history}
+          renderItem={(item) => {
             return (
               <List.Item>
                 <List.Item.Meta
-                  title={<div>Hello</div>}
-                  description={<div>1212</div>}
+                  title={<div>{item.name}</div>}
+                  description={<div>{item}</div>}
                 />
               </List.Item>
             );

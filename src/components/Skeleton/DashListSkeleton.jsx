@@ -12,7 +12,7 @@ const DashListSkeleton = () => {
       description={
         <Skeleton.Button
           active
-          style={{ height: "16px", width: "300px ", marginTop: "8px" }}
+          style={{ height: "16px", width: "250px ", marginTop: "8px" }}
         />
       }
     >
