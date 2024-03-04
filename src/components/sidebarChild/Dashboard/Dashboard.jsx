@@ -1,9 +1,10 @@
 import { Button, Empty } from "antd";
 import React from "react";
-import BarChartBox from "../chart/BarChartBox";
-import ChartBox from "../chart/ChartBox";
-import PieChartBox from "../chart/PieChartBox";
-import DashList from "../DashList";
+import BarChartBox from "../../chart/BarChartBox";
+import ChartBox from "../../chart/ChartBox";
+import PieChartBox from "../../chart/PieChartBox";
+import Addcompo from "./Addcompo";
+import DashList from "./DashList";
 
 export const Dashboard = () => {
   return (

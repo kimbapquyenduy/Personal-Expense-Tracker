@@ -3,9 +3,10 @@ import { doc, onSnapshot } from "firebase/firestore";
 import { Badge, Rows3 } from "lucide-react";
 import React, { useEffect } from "react";
 import { useState } from "react";
-import { UserAuth } from "../context/AuthConext";
-import { db } from "../firebase";
-import DashListSkeleton from "./Skeleton/DashListSkeleton";
+import { UserAuth } from "../../../context/AuthConext";
+import { db } from "../../../firebase";
+import DashListSkeleton from "../../Skeleton/DashListSkeleton";
+import Addcompo from "./Addcompo";
 
 const DashList = () => {
   const [isLoading, setIsLoading] = useState(true);
@@ -105,6 +106,8 @@ const DashList = () => {
           }}
         ></List>
       )}
+
+      <Addcompo />
     </Card>
   );
 };

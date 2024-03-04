@@ -13,7 +13,6 @@ import {
 } from "lucide-react";
 import React, { useState } from "react";
 import { Link, Route, Routes } from "react-router-dom";
-import { Dashboard } from "./sidebarChild/Dashboard";
 
 export const SidebarHome = () => {
   const [open, setOpen] = useState(true);

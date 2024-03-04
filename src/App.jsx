@@ -16,10 +16,11 @@ import { Login } from "./pages/Login";
 import { Navbar } from "./components/Navbar";
 import Schedule from "./components/sidebarChild/Schedule";
 import Analytics from "./components/sidebarChild/Analytics";
-import { Dashboard } from "./components/sidebarChild/Dashboard";
+
 import Expense from "./components/sidebarChild/Expense";
 import { AuthContextProvider } from "./context/AuthConext";
 import { ProtectRoute } from "./components/ProtectedRoute";
+import { Dashboard } from "./components/sidebarChild/Dashboard/Dashboard";
 
 function App() {
   const [count, setCount] = useState(0);
