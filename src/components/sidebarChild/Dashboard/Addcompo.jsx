@@ -1,13 +1,27 @@
-import { Button, DatePicker, Form, InputNumber, Modal, Radio } from "antd";
+import {
+  Button,
+  DatePicker,
+  Form,
+  InputNumber,
+  Modal,
+  Radio,
+  Select,
+} from "antd";
 import React, { useState } from "react";
 import { PlusOutlined } from "@ant-design/icons";
 import moment from "moment/moment";
+import TextArea from "antd/es/input/TextArea";
+import { UserAuth } from "../../../context/AuthConext";
+import { arrayUnion, doc, updateDoc } from "firebase/firestore";
+import { v1 as uuidv1 } from "uuid";
+import { db } from "../../../firebase";
 
 const Addcompo = () => {
   const [open, setOpen] = useState(false);
   const [confirmLoading, setConfirmLoading] = useState(false);
   const [modalText, setModalText] = useState("Content of the modal");
   const [form] = Form.useForm();
+  const { user } = UserAuth();
 
   const showModal = () => {
     setOpen(true);
@@ -30,10 +44,52 @@ const Addcompo = () => {
       },
     },
   };
-  const handleOk = (values) => {
+
+  const saveMovies = async () => {
+    if (user?.email) {
+      await updateDoc(expenseID, {
+        Expense: arrayUnion({
+          id: item?.id,
+          title: item?.title ? item?.title : item.name,
+          backdrop_path: item.backdrop_path,
+          genre_ids: item.genre_ids,
+          overview: item.overview,
+          release_date: item.release_date
+            ? item.release_date
+            : item.first_air_date,
+          vote_average: item.vote_average,
+          tOS: tOS,
+        }),
+      });
+      setSave(true);
+    } else {
+      alert("Log In To Save Movies!");
+    }
+  };
+  const expenseID = doc(db, "users", `${user?.email}`);
+  const exid = uuidv1();
+
+  const handleOk = async (values) => {
     setModalText("The modal will be closed after two seconds");
     setConfirmLoading(true);
+    console.log(values["DatePicker"].format("YYYY-MM-DD"));
     console.log(values);
+
+    if (user?.email) {
+      await updateDoc(expenseID, {
+        Expense: arrayUnion({
+          id: exid,
+          Money: values["Money"],
+          Type: values["Type"],
+          Datevalue: values["DatePicker"].format("YYYY-MM-DD"),
+          TOE: values["TypeofExpense"],
+          Note: values["Note"],
+        }),
+      });
+    } else {
+      alert("Log In To Save Movies!");
+    }
+
     form.resetFields();
     setTimeout(() => {
       setOpen(false);
@@ -65,8 +121,8 @@ const Addcompo = () => {
           onFinish={handleOk}
         >
           <Form.Item
-            label="InputNumber"
-            name="InputNumber"
+            label="Money"
+            name="Money"
             rules={[
               {
                 required: true,
@@ -80,15 +136,9 @@ const Addcompo = () => {
               }}
             />
           </Form.Item>
-          <Form.Item name="radio-group" label="Radio.Group">
-            <Radio.Group>
-              <Radio value="a">item 1</Radio>
-              <Radio value="b">item 2</Radio>
-              <Radio value="c">item 3</Radio>
-            </Radio.Group>
-          </Form.Item>
+
           <Form.Item
-            label="DatePicker"
+            label="Date"
             name="DatePicker"
             rules={[
               {
@@ -97,8 +147,51 @@ const Addcompo = () => {
               },
             ]}
           >
-            <DatePicker initialValues={moment()} format={"YYYY/MM/DD"} />
+            <DatePicker type={"object"} format={"YYYY / MM / DD"} />
           </Form.Item>
+
+          <Form.Item
+            name="Type"
+            label="Type"
+            rules={[
+              {
+                required: true,
+                message: "Please input!",
+              },
+            ]}
+          >
+            <Radio.Group>
+              <Radio value={"expense"} defaultChecked>
+                Expense
+              </Radio>
+              <Radio defaultChecked={false} value={"income"}>
+                Income
+              </Radio>
+            </Radio.Group>
+          </Form.Item>
+
+          <Form.Item
+            label="Type of Expense"
+            name="TypeofExpense"
+            rules={[
+              {
+                required: true,
+                message: "Please input!",
+              },
+            ]}
+          >
+            <Select>
+              <Select.Option value="Food">Food</Select.Option>
+              <Select.Option value="Gas">Gas</Select.Option>
+              <Select.Option value="Rent">Rent</Select.Option>
+              <Select.Option value="Other">Other</Select.Option>
+            </Select>
+          </Form.Item>
+
+          <Form.Item label="Note" name="Note">
+            <TextArea rows={4} />
+          </Form.Item>
+
           <Form.Item
             wrapperCol={{
               offset: 6,

@@ -95,11 +95,17 @@ const DashList = () => {
           itemLayout="horizontal"
           dataSource={history}
           renderItem={(item) => {
+            console.log(item.Type);
+
             return (
               <List.Item>
                 <List.Item.Meta
-                  title={<div>{item.name}</div>}
-                  description={<div>{item}</div>}
+                  title={
+                    <div>
+                      {item.Datevalue} - {item.Money} - {item.Type} - {item.TOE}
+                    </div>
+                  }
+                  description={<div></div>}
                 />
               </List.Item>
             );
