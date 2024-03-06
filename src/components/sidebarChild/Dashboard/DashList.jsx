@@ -1,4 +1,4 @@
-import { Card, List } from "antd";
+import { Card, Divider, List, Skeleton } from "antd";
 import { doc, onSnapshot } from "firebase/firestore";
 import { Badge, Rows3 } from "lucide-react";
 import React, { useEffect } from "react";
@@ -10,60 +10,15 @@ import Addcompo from "./Addcompo";
 
 const DashList = () => {
   const [isLoading, setIsLoading] = useState(true);
-  const data = [
-    {
-      name: "Page A",
-      uv: 4000,
-      pv: 2400,
-      amt: 2400,
-    },
-    {
-      name: "Page B",
-      uv: 3000,
-      pv: 1398,
-      amt: 2210,
-    },
-    {
-      name: "Page C",
-      uv: 2000,
-      pv: 9800,
-      amt: 2290,
-    },
-    {
-      name: "Page D",
-      uv: 2780,
-      pv: 3908,
-      amt: 2000,
-    },
-    {
-      name: "Page E",
-      uv: 1890,
-      pv: 4800,
-      amt: 2181,
-    },
-    {
-      name: "Page F",
-      uv: 2390,
-      pv: 3800,
-      amt: 2500,
-    },
-    {
-      name: "Page G",
-      uv: 3490,
-      pv: 4300,
-      amt: 2100,
-    },
-  ];
 
   const [history, setHistory] = useState([]);
   const { user } = UserAuth();
   useEffect(() => {
     onSnapshot(doc(db, "users", `${user?.email}`), (doc) => {
-      setHistory(doc.data()?.Expense);
+      setHistory(doc.data()?.Expense.reverse().slice(0, 5));
       setIsLoading(false);
     });
   }, [user?.email]);
-  console.log(history);
   return (
     <Card
       style={{ height: "100%" }}
@@ -78,7 +33,12 @@ const DashList = () => {
           }}
         >
           <Rows3 />
-          <div className="text-sm ml-1">History</div>
+          <div className="flex justify-between w-full">
+            <div className="text-sm ml-1">History</div>
+            <div className="text-sm ml-1 underline cursor-pointer">
+              See More
+            </div>
+          </div>
         </div>
       }
     >
@@ -94,18 +54,34 @@ const DashList = () => {
         <List
           itemLayout="horizontal"
           dataSource={history}
-          renderItem={(item) => {
-            console.log(item.Type);
+          renderItem={(item, index) => {
+            console.log(index);
 
             return (
               <List.Item>
                 <List.Item.Meta
                   title={
                     <div>
-                      {item.Datevalue} - {item.Money} - {item.Type} - {item.TOE}
+                      <div className="flex justify-between">
+                        <div className="flex items-center">
+                          {item.Type == "expense" ? (
+                            <div className="bg-red-400 w-[10px] h-[10px] text-[0.6rem] text-white rounded-full font-bold items-center justify-center flex mr-2"></div>
+                          ) : (
+                            <div className="bg-green-500  w-[10px] h-[10px] text-[0.6rem] text-white rounded-full font-bold items-center justify-center flex mr-2"></div>
+                          )}
+                          <div className="font-medium">{item.Datevalue}</div>
+                        </div>
+                        <div className="">
+                          {item.Money.toLocaleString("it-IT", {
+                            style: "currency",
+                            currency: "VND",
+                          })}
+                        </div>
+                      </div>
+                      <div className="font-semibold">{item.TOE} </div>
                     </div>
                   }
-                  description={<div></div>}
+                  description={<div>{item.Note}</div>}
                 />
               </List.Item>
             );
