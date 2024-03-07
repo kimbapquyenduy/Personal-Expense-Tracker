@@ -55,8 +55,6 @@ const DashList = () => {
           itemLayout="horizontal"
           dataSource={history}
           renderItem={(item, index) => {
-            console.log(index);
-
             return (
               <List.Item>
                 <List.Item.Meta

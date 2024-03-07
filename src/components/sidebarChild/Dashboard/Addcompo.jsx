@@ -72,8 +72,6 @@ const Addcompo = () => {
   const handleOk = async (values) => {
     setModalText("The modal will be closed after two seconds");
     setConfirmLoading(true);
-    console.log(values["DatePicker"].format("YYYY-MM-DD"));
-    console.log(values);
 
     if (user?.email) {
       await updateDoc(expenseID, {
@@ -81,20 +79,22 @@ const Addcompo = () => {
           id: exid,
           Money: values["Money"],
           Type: values["Type"],
-          Datevalue: values["DatePicker"].format("YYYY-MM-DD"),
+          Datevalue: values["DatePicker"].format("DD/MM/YYYY"),
           TOE: values["TypeofExpense"],
-          Note: values["Note"],
+          Note: values["Note"] ? values["Note"] : " ",
         }),
       });
+      setOpen(false);
+      setConfirmLoading(false);
     } else {
       alert("Log In To Save Movies!");
     }
 
     form.resetFields();
-    setTimeout(() => {
-      setOpen(false);
-      setConfirmLoading(false);
-    }, 2000);
+    // setTimeout(() => {
+    //   setOpen(false);
+    //   setConfirmLoading(false);
+    // }, 2000);
   };
   const handleCancel = () => {
     console.log("Clicked cancel button");
