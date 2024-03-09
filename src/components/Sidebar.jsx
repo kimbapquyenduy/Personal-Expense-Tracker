@@ -63,7 +63,7 @@ export const SidebarHome = () => {
         </div>
         <ul className="pt-6">
           {Menus.map((Menu, index) => (
-            <Link to={`/${index != 0 ? Menu.title : ""}`}>
+            <Link key={index} to={`/${index != 0 ? Menu.title : ""}`}>
               <li
                 key={index}
                 className={`flex  rounded-md p-2 cursor-pointer hover:bg-light-white text-gray-300 text-sm items-center gap-x-4 
@@ -74,6 +74,7 @@ export const SidebarHome = () => {
                 {Menu.src}
 
                 <span
+                  key={index}
                   className={`${!open && "hidden"} origin-left duration-200`}
                 >
                   {Menu.title}
