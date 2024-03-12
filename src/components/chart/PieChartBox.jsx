@@ -1,7 +1,14 @@
 import React from "react";
-import { PieChart, Pie, Sector, Cell, ResponsiveContainer } from "recharts";
+import {
+  PieChart,
+  Pie,
+  Sector,
+  Cell,
+  ResponsiveContainer,
+  Legend,
+} from "recharts";
 
-const PieChartBox = () => {
+const PieChartBox = ({ getThisMonthTOE }) => {
   const data = [
     { name: "Group A", value: 400 },
     { name: "Group B", value: 300 },
@@ -30,7 +37,9 @@ const PieChartBox = () => {
         y={y}
         fill="white"
         textAnchor={x > cx ? "start" : "end"}
+        verticalAnchor="end"
         dominantBaseline="central"
+        scaleToFit="true"
       >
         {`${(percent * 100).toFixed(0)}%`}
       </text>
@@ -39,24 +48,26 @@ const PieChartBox = () => {
   return (
     <div className="w-[50%] h-full">
       <ResponsiveContainer width="100%" height="100%">
-        <PieChart width={400} height={400}>
+        <PieChart width={700} height={700}>
           <Pie
-            data={data}
+            data={getThisMonthTOE()}
             cx="50%"
             cy="50%"
-            labelLine={true}
+            labelLine={false}
             label={renderCustomizedLabel}
-            outerRadius={80}
+            outerRadius={120}
             fill="#8884d8"
-            dataKey="value"
+            dataKey="Money"
           >
-            {data.map((entry, index) => (
+            {getThisMonthTOE().map((entry, index) => (
               <Cell
-                key={`cell-${index}`}
+                name={entry.TOE}
+                key={`cell-${entry}`}
                 fill={COLORS[index % COLORS.length]}
               />
             ))}
           </Pie>
+          <Legend layout="vertical" align="right" verticalAlign="middle" />
         </PieChart>
       </ResponsiveContainer>
     </div>

@@ -16,7 +16,7 @@ import {
 } from "recharts";
 import { Select } from "antd";
 
-const ChartBox = ({ data, income, expense }) => {
+const ChartBox = ({ data, getMonthlyMoney }) => {
   const [timeState, setTimeState] = useState("Today");
 
   const getTotalMoney = () => {
@@ -35,47 +35,49 @@ const ChartBox = ({ data, income, expense }) => {
   };
   const getTotalIncome = () => {
     let money = 0;
-    income?.map((data) => {
-      switch (timeState) {
-        case "Today":
-          if (
-            data?.Datevalue ==
-            new Date().toLocaleDateString("en-GB", {
-              year: "numeric",
-              month: "2-digit",
-              day: "2-digit",
-            })
-          ) {
-            money += data.Money;
-          }
+    data?.map((data) => {
+      if (data.Type === "income") {
+        switch (timeState) {
+          case "Today":
+            if (
+              data?.Datevalue ==
+              new Date().toLocaleDateString("en-GB", {
+                year: "numeric",
+                month: "2-digit",
+                day: "2-digit",
+              })
+            ) {
+              money += data.Money;
+            }
 
-          break;
-        case "Month":
-          if (
-            data?.Datevalue.slice(3) ==
-            new Date().toLocaleString("en-GB", {
-              month: "2-digit",
-              year: "numeric",
-            })
-          ) {
-            money += data.Money;
-          }
+            break;
+          case "Month":
+            if (
+              data?.Datevalue.slice(3) ==
+              new Date().toLocaleString("en-GB", {
+                month: "2-digit",
+                year: "numeric",
+              })
+            ) {
+              money += data.Money;
+            }
 
-          break;
-        case "Year":
-          if (
-            data?.Datevalue.slice(6) ==
-            new Date().toLocaleString("en-GB", {
-              year: "numeric",
-            })
-          ) {
-            money += data.Money;
-          }
+            break;
+          case "Year":
+            if (
+              data?.Datevalue.slice(6) ==
+              new Date().toLocaleString("en-GB", {
+                year: "numeric",
+              })
+            ) {
+              money += data.Money;
+            }
 
-          break;
-        case "All Time":
-          money += data.Money;
-          break;
+            break;
+          case "All Time":
+            money += data.Money;
+            break;
+        }
       }
     });
     return money.toLocaleString("it-IT", {
@@ -85,46 +87,48 @@ const ChartBox = ({ data, income, expense }) => {
   };
   const getTotalExpense = () => {
     let money = 0;
-    expense?.map((data) => {
-      switch (timeState) {
-        case "Today":
-          if (
-            data?.Datevalue ==
-            new Date().toLocaleDateString("en-GB", {
-              year: "numeric",
-              month: "2-digit",
-              day: "2-digit",
-            })
-          ) {
-            money += data.Money;
-          }
+    data?.map((data) => {
+      if (data?.Type === "expense") {
+        switch (timeState) {
+          case "Today":
+            if (
+              data?.Datevalue ==
+              new Date().toLocaleDateString("en-GB", {
+                year: "numeric",
+                month: "2-digit",
+                day: "2-digit",
+              })
+            ) {
+              money += data.Money;
+            }
 
-          break;
-        case "Month":
-          if (
-            data?.Datevalue.slice(3) ==
-            new Date().toLocaleString("en-GB", {
-              month: "2-digit",
-              year: "numeric",
-            })
-          ) {
-            money += data.Money;
-          }
+            break;
+          case "Month":
+            if (
+              data?.Datevalue.slice(3) ==
+              new Date().toLocaleString("en-GB", {
+                month: "2-digit",
+                year: "numeric",
+              })
+            ) {
+              money += data.Money;
+            }
 
-          break;
-        case "Year":
-          if (
-            data?.Datevalue.slice(6) ==
-            new Date().toLocaleString("en-GB", {
-              year: "numeric",
-            })
-          ) {
+            break;
+          case "Year":
+            if (
+              data?.Datevalue.slice(6) ==
+              new Date().toLocaleString("en-GB", {
+                year: "numeric",
+              })
+            ) {
+              money += data.Money;
+            }
+            break;
+          case "All Time":
             money += data.Money;
-          }
-          break;
-        case "All Time":
-          money += data.Money;
-          break;
+            break;
+        }
       }
     });
     return money.toLocaleString("it-IT", {
@@ -132,127 +136,6 @@ const ChartBox = ({ data, income, expense }) => {
       currency: "VND",
     });
   };
-
-  const getMonthly = (type) => {
-    let monthArray = [
-      {
-        month:
-          "01/" +
-          new Date().toLocaleString("en-GB", {
-            year: "numeric",
-          }),
-        money: 0,
-      },
-      {
-        month:
-          "02/" +
-          new Date().toLocaleString("en-GB", {
-            year: "numeric",
-          }),
-        money: 0,
-      },
-      {
-        month:
-          "03/" +
-          new Date().toLocaleString("en-GB", {
-            year: "numeric",
-          }),
-        money: 0,
-      },
-      {
-        month:
-          "04/" +
-          new Date().toLocaleString("en-GB", {
-            year: "numeric",
-          }),
-        money: 0,
-      },
-      {
-        month:
-          "05/" +
-          new Date().toLocaleString("en-GB", {
-            year: "numeric",
-          }),
-        money: 0,
-      },
-      {
-        month:
-          "06/" +
-          new Date().toLocaleString("en-GB", {
-            year: "numeric",
-          }),
-        money: 0,
-      },
-      {
-        month:
-          "07/" +
-          new Date().toLocaleString("en-GB", {
-            year: "numeric",
-          }),
-        money: 0,
-      },
-      {
-        month:
-          "08/" +
-          new Date().toLocaleString("en-GB", {
-            year: "numeric",
-          }),
-        money: 0,
-      },
-      {
-        month:
-          "09/" +
-          new Date().toLocaleString("en-GB", {
-            year: "numeric",
-          }),
-        money: 0,
-      },
-      {
-        month:
-          "10/" +
-          new Date().toLocaleString("en-GB", {
-            year: "numeric",
-          }),
-        money: 0,
-      },
-      {
-        month:
-          "11/" +
-          new Date().toLocaleString("en-GB", {
-            year: "numeric",
-          }),
-        money: 0,
-      },
-      {
-        month:
-          "12/" +
-          new Date().toLocaleString("en-GB", {
-            year: "numeric",
-          }),
-        money: 0,
-      },
-    ];
-    if (type == "income") {
-      income.map((item) => {
-        monthArray.map((monthValue) => {
-          if (item.Datevalue.slice(3) == monthValue.month) {
-            monthValue.money += item.Money;
-          }
-        });
-      });
-    } else if (type == "expense") {
-      expense.map((item) => {
-        monthArray.map((monthValue) => {
-          if (item.Datevalue.slice(3) == monthValue.month) {
-            monthValue.money += item.Money;
-          }
-        });
-      });
-    }
-
-    return monthArray;
-  };
-  console.log(getMonthly("expense"));
 
   const handleChange = (value) => {
     setTimeState(value);
@@ -326,7 +209,7 @@ const ChartBox = ({ data, income, expense }) => {
             </div>
             <div className="w-[35%] h-[60%]">
               <ResponsiveContainer width="100%" height="100%">
-                <LineChart data={income}>
+                <LineChart data={getMonthlyMoney("income")}>
                   <Tooltip
                     contentStyle={{
                       background: "#fff",
@@ -341,7 +224,7 @@ const ChartBox = ({ data, income, expense }) => {
 
                   <Line
                     type="monotone"
-                    dataKey="Money"
+                    dataKey="money"
                     stroke="#8EBDFB"
                     strokeWidth={2}
                     dot={false}
@@ -361,6 +244,32 @@ const ChartBox = ({ data, income, expense }) => {
               <div className="text-xl font-semibold text-gray-700 ">
                 {getTotalExpense()}
               </div>
+            </div>
+            <div className="w-[35%] h-[60%]">
+              <ResponsiveContainer width="100%" height="100%">
+                <LineChart data={getMonthlyMoney("expense")}>
+                  <Tooltip
+                    contentStyle={{
+                      background: "#fff",
+                      border: "none",
+                      boxShadow:
+                        "rgba(50, 50, 105, 0.15) 0px 2px 5px 0px, rgba(0, 0, 0, 0.05) 0px 1px 1px 0px",
+                      borderRadius: "10%",
+                    }}
+                    labelStyle={{ display: "none" }}
+                    position={{ x: 10, y: 60 }}
+                    wrapperStyle={{ zIndex: 1000 }}
+                  />
+
+                  <Line
+                    type="monotone"
+                    dataKey="money"
+                    stroke="#8EBDFB"
+                    strokeWidth={2}
+                    dot={false}
+                  />
+                </LineChart>
+              </ResponsiveContainer>
             </div>
           </div>
         </div>
