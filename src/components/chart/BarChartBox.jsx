@@ -57,7 +57,7 @@ const BarChartBox = () => {
     },
   ];
   return (
-    <div className="w-[50%] m-8 border ">
+    <div className="w-[50%] h-[50%] m-8 border ">
       <div className="text-xl font-bold m-5"> Expense </div>
       <div className="w-full h-full">
         <ResponsiveContainer width="100%" height="100%">

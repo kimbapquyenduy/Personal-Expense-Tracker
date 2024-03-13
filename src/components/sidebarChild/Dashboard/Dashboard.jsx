@@ -16,6 +16,8 @@ import {
 } from "firebase/firestore";
 import { UserAuth } from "../../../context/AuthConext";
 import { db } from "../../../firebase";
+import AreraChart from "../../chart/AreraChartBox";
+import AreraChartBox from "../../chart/AreraChartBox";
 export const Dashboard = () => {
   const [data, setData] = useState([]);
 
@@ -205,6 +207,9 @@ export const Dashboard = () => {
       <div className=" w-[75%]">
         <ChartBox data={data} getMonthlyMoney={getMonthlyMoney} />
 
+        <div className="w-full bg-white flex rounded">
+          <AreraChartBox />
+        </div>
         <div className="w-full h-[75%] bg-white mt-12 flex rounded">
           <BarChartBox />
           <PieChartBox getThisMonthTOE={getThisMonthTOE} />

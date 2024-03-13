@@ -46,7 +46,7 @@ const PieChartBox = ({ getThisMonthTOE }) => {
     );
   };
   return (
-    <div className="w-[50%] h-full">
+    <div className="w-[50%] h-[50%]">
       <ResponsiveContainer width="100%" height="100%">
         <PieChart width={700} height={700}>
           <Pie
